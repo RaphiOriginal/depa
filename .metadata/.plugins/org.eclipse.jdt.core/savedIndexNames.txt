@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/Users/raphaelbrunner/Documents/FHNW/Semester5/depa/uebungen/.metadata/.plugins/org.eclipse.jdt.core
+3848359237.index

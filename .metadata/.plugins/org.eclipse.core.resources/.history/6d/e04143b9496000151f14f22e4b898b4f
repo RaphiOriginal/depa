@@ -1,0 +1,5 @@
+package ch.fhnw.depa.colorpicker.gui;
+
+public class ErrorMessage {
+
+}
