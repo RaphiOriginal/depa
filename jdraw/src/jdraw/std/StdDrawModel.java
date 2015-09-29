@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
+import jdraw.framework.DrawModelEvent;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
 
@@ -20,18 +21,18 @@ import jdraw.framework.Figure;
  *
  */
 public class StdDrawModel implements DrawModel {
+	private LinkedList<Figure> figures = new LinkedList<Figure>();
+	private LinkedList<DrawModelListener> listeners = new LinkedList<DrawModelListener>();
 
 	@Override
 	public void addFigure(Figure f) {
-		// TODO to be implemented
-		System.out.println("StdDrawModel.addFigure has to be implemented");
+		figures.add(f);
+		modelChanged(f, DrawModelEvent.Type.FIGURE_ADDED);
 	}
 
 	@Override
 	public Iterable<Figure> getFigures() {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.getFigures has to be implemented");
-		return new LinkedList<Figure>(); // Only guarantees, that the application starts -- has to be replaced !!!
+		return figures;
 	}
 
 	@Override
@@ -42,8 +43,7 @@ public class StdDrawModel implements DrawModel {
 
 	@Override
 	public void addModelChangeListener(DrawModelListener listener) {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.addModelChangeListener has to be implemented");
+		listeners.add(listener);
 	}
 
 	@Override
@@ -74,6 +74,13 @@ public class StdDrawModel implements DrawModel {
 	public void removeAllFigures() {
 		// TODO to be implemented  
 		System.out.println("StdDrawModel.removeAllFigures has to be implemented");
+	}
+	
+	private void modelChanged(Figure f, DrawModelEvent.Type t){
+		DrawModelEvent event = new DrawModelEvent(this, f, t);
+		for(DrawModelListener l:listeners){
+			l.modelChanged(event);
+		}
 	}
 
 }
