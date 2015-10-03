@@ -61,8 +61,10 @@ public class Rect implements Figure {
 
 	@Override
 	public void move(int dx, int dy) {
-		rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
-		figureChanged(this);
+		if(rectangle.getX() != dx || rectangle.getY() != dy){
+			rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
+			figureChanged(this);
+		}
 	}
 
 	@Override
@@ -92,7 +94,7 @@ public class Rect implements Figure {
 
 	@Override
 	public void removeFigureListener(FigureListener listener) {
-		// TODO Auto-generated method stub
+		listeners.remove(listener);
 	}
 
 	@Override
