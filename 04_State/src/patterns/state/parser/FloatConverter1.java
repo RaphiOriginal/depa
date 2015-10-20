@@ -28,10 +28,23 @@ public class FloatConverter1 {
 	}
 	
 	private static double parseFloat(String str) {
-		State s = State.S0;
-		double m = 0, quo = 10;
-		int exp = 0, exp_sign = 1;
-		int pos = 0;
+		class Context implements FloatContextInterface{
+			IState s = new S0();
+			double m = 0,quo = 10;
+			int exp = 0, exp_sign = 1;
+			int pos = 0;
+		}
+		class S0 extends AbstractState {
+
+			@Override
+			public FloatContextInterface parse(FloatContextInterface context) {
+				if(isDigit(ch)) { context.m = getNumericValue(ch); s = State.S1; }
+				else if(ch == '.') { s = State.S2; }
+				else s = State.ERROR;
+				return null;
+			}
+			
+		}
 		while (s != State.ERROR && pos < str.length()) {
 			char ch = str.charAt(pos++);
 			switch (s) {
@@ -85,5 +98,6 @@ public class FloatConverter1 {
 	
 	private enum State {
 		S0, S1, S2, S3, S4, S5, S6, ERROR
+		
 	}
 }
