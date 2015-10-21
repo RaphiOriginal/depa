@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 
-public class NorthMiddleHandle extends AbstractHandle{
+public class NorthMiddleHandle extends AbstractMiddleHandle{
 
 	public NorthMiddleHandle(Figure f) {
 		super(f);
@@ -20,20 +20,19 @@ public class NorthMiddleHandle extends AbstractHandle{
 
 	@Override
 	public Cursor getCursor() {
-		// TODO Auto-generated method stub
-		return null;
+		return Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
 	}
 
 	@Override
 	public void startInteraction(int x, int y, MouseEvent e, DrawView v) {
-		// TODO Auto-generated method stub
-		
+		java.awt.Rectangle r = owner.getBounds();
+		corner = new Point(r.x, r.y +  r.height);
+		corner2 = new Point(r.x + r.width, r.y + r.height);
 	}
 
 	@Override
 	public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
-		// TODO Auto-generated method stub
-		
+		owner.setBounds(new Point(corner.x, y), corner2);
 	}
 
 }
