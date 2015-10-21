@@ -35,7 +35,16 @@ public abstract class AbstractGeometry implements Figure{
 	 */	
 	@Override
 	public List<FigureHandle> getHandles() {
-		return null;
+		List<FigureHandle> handles = new LinkedList<>();
+		handles.add(new NorthWestHandle(this));
+		handles.add(new NorthEastHandle(this));
+		handles.add(new SouthWestHandle(this));
+		handles.add(new SouthEastHandle(this));
+		handles.add(new NorthMiddleHandle(this));
+		handles.add(new WestMiddleHandle(this));
+		handles.add(new EastMiddleHandle(this));
+		handles.add(new SouthMiddleHandle(this));
+		return handles;
 	}
 
 	@Override
