@@ -54,9 +54,4 @@ public class Line extends AbstractGeometry{
 		return line.getBounds();
 	}
 
-	@Override
-	public List<FigureHandle> getHandles() {
-		return null;
-	}
-
 }

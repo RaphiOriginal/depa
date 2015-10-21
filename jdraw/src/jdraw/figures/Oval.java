@@ -57,9 +57,4 @@ public class Oval extends AbstractGeometry{
 		return oval.getBounds();
 	}
 
-	@Override
-	public List<FigureHandle> getHandles() {
-		return null;
-	}
-
 }
