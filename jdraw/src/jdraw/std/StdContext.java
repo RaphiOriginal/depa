@@ -25,6 +25,8 @@ import jdraw.framework.DrawTool;
 import jdraw.framework.DrawToolFactory;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
+import jdraw.grid.SimpleGrid;
+import jdraw.grid.StepGrid;
 
 /**
  * Standard implementation of interface DrawContext.
@@ -133,9 +135,27 @@ public class StdContext extends AbstractContext {
 		editMenu.add(orderMenu);
 
 		JMenu grid = new JMenu("Grid...");
-		grid.add("Grid 1");
-		grid.add("Grid 2");
-		grid.add("Grid 3");
+		
+		JMenuItem nullGrid = new JMenuItem("No Grid");
+		nullGrid.addActionListener(e -> getView().setConstrainer(null));
+		grid.add(nullGrid);
+		
+		JMenuItem simpleGrid = new JMenuItem("Simple Grid");
+		simpleGrid.addActionListener(e -> getView().setConstrainer(new SimpleGrid()));
+		grid.add(simpleGrid);
+		
+		JMenuItem stepGrid10 = new JMenuItem("Grid 10");
+		stepGrid10.addActionListener(e -> getView().setConstrainer(new StepGrid(10)));
+		grid.add(stepGrid10);
+		
+		JMenuItem stepGrid20 = new JMenuItem("Grid 20");
+		stepGrid20.addActionListener(e -> getView().setConstrainer(new StepGrid(30)));
+		grid.add(stepGrid20);
+		
+		JMenuItem stepGrid30 = new JMenuItem("Grid 30");
+		stepGrid30.addActionListener(e -> getView().setConstrainer(new StepGrid(30)));
+		grid.add(stepGrid30);
+		
 		editMenu.add(grid);
 		
 		return editMenu;
