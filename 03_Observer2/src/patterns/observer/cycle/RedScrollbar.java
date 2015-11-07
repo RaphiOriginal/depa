@@ -25,7 +25,7 @@ public class RedScrollbar extends Observable implements Observer {
 	public void update(Observable source, Object arg) {
 		System.out.println("model changed its color => adjust scrollbar value");
 		int color = ((Color)arg).getRed();
-		if(color != value) setValue(color);
+		if(color != getValue()) setValue(color);
 	}
 
 }

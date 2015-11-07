@@ -1,10 +1,10 @@
 package patterns.observer.bag;
 
-public class AdderObserver implements Observer {
+public class AdderObserver implements java.util.Observer {
 
 	@Override
-	public void update(Observable source) {
-		IntegerBag bag = (IntegerBag) source;
+	public void update(java.util.Observable o, Object arg) {
+		IntegerBag bag = (IntegerBag) o;
 
 		int sum = 0;
 		for (int n : bag.getValues()) {

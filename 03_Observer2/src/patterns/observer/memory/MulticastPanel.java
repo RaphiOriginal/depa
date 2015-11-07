@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 // A panel with buttons to create and close sample frames.
 public class MulticastPanel extends JPanel implements ActionListener {
@@ -24,6 +25,7 @@ public class MulticastPanel extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent evt) {
 		SimpleFrame f = new SimpleFrame();
+		f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		counter++;
 		f.setTitle("Window " + counter);
 		f.setSize(250, 150);
@@ -32,6 +34,7 @@ public class MulticastPanel extends JPanel implements ActionListener {
 	}
 
 	private class SimpleFrame extends JFrame implements ActionListener {
+		
 		byte[][] buf = new byte[1024][];
 		{
 			for (int i = 0; i < 1024; i++) {
@@ -40,6 +43,8 @@ public class MulticastPanel extends JPanel implements ActionListener {
 		}
 
 		public void actionPerformed(ActionEvent evt) {
+			JButton closeAllButton = (JButton)evt.getSource();
+			closeAllButton.removeActionListener(this);
 			this.dispose();
 		}
 	}

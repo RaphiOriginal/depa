@@ -1,6 +1,7 @@
 package patterns.observer.multimodel;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +31,15 @@ public class ColorModel {
 	}
 
 	public void setColor(Color c) {
+		EnumSet<ColorChannel> s = EnumSet.noneOf(ColorChannel.class);
+		if(red != c.getRed()) s.add(ColorChannel.RED);
+		if(green != c.getGreen()) s.add(ColorChannel.GREEN);
+		if(blue != c.getBlue()) s.add(ColorChannel.BLUE);
 		setRed(c.getRed());
 		setGreen(c.getGreen());
 		setBlue(c.getBlue());
+		this.color = new Color(red, green, blue);
+		notifyListeners(s);
 	}
 
 	public Color getColor() {
@@ -42,24 +49,24 @@ public class ColorModel {
 	public void setRed(int red) {
 		this.red = red;
 		this.color = new Color(red, green, blue);
-		notifyListeners(ColorChannel.RED);
+		notifyListeners(EnumSet.of(ColorChannel.RED));
 	}
 
 	public void setGreen(int green) {
 		this.green = green;
 		this.color = new Color(red, green, blue);
-		notifyListeners(ColorChannel.GREEN);
+		notifyListeners(EnumSet.of(ColorChannel.GREEN));
 	}
 
 	public void setBlue(int blue) {
 		this.blue = blue;
 		this.color = new Color(red, green, blue);
-		notifyListeners(ColorChannel.BLUE);
+		notifyListeners(EnumSet.of(ColorChannel.BLUE));
 	}
 
-	private void notifyListeners(ColorChannel channel) {
+	private void notifyListeners(EnumSet<ColorChannel> channels) {
 		for (ColorListener l : listeners.keySet()) {
-			if (listeners.get(l).contains(channel))
+			if (!Collections.disjoint(listeners.get(l), channels))
 				l.colorValueChanged(color);
 		}
 	}

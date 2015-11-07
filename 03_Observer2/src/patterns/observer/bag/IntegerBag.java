@@ -3,16 +3,18 @@ package patterns.observer.bag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntegerBag extends Observable {
+public class IntegerBag extends java.util.Observable {
 	private List<Integer> list = new ArrayList<Integer>();
 
 	public void addValue(int value) {
 		list.add(value);
+		setChanged();
 		notifyObservers();
 	}
 
 	public void removeValue(int value) {
 		list.remove((Object) value);
+		setChanged();
 		notifyObservers();
 	}
 

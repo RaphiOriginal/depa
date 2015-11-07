@@ -15,7 +15,9 @@ public class Observable {
 	}
 
 	public void notifyObservers() {
-		for (Observer obs : observers) {
+		Observer[] copy;
+		synchronized(this) { copy = observers.toArray(new Observer[observers.size()]); }
+		for (Observer obs : copy) {
 			obs.update(this);
 		}
 	}

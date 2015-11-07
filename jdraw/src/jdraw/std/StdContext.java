@@ -25,6 +25,7 @@ import jdraw.framework.DrawTool;
 import jdraw.framework.DrawToolFactory;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
+import jdraw.grid.ObjectGrid;
 import jdraw.grid.SimpleGrid;
 import jdraw.grid.StepGrid;
 
@@ -155,6 +156,10 @@ public class StdContext extends AbstractContext {
 		JMenuItem stepGrid30 = new JMenuItem("Grid 30");
 		stepGrid30.addActionListener(e -> getView().setConstrainer(new StepGrid(30)));
 		grid.add(stepGrid30);
+		
+		JMenuItem ObjectGrid = new JMenuItem("ObjectGrid");
+		ObjectGrid.addActionListener(e -> getView().setConstrainer(new ObjectGrid(super.getView())));
+		grid.add(ObjectGrid);
 		
 		editMenu.add(grid);
 		
