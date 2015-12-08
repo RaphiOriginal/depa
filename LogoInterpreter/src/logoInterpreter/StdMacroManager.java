@@ -1,15 +1,24 @@
 package logoInterpreter;
 
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+
 import logoInterpreter.commands.Command;
+import logoInterpreter.commands.MacroCommand;
+import logoInterpreter.commands.NotFoundCommand;
 
 public class StdMacroManager implements MacroManager {
 	private final LogoInterpreter interpreter;
 	private boolean recording;
-	// private List<Command> macroList LinkedList<>();
+	private Map<String, MacroCommand> macros;
+	private String name;
 
 	public StdMacroManager(LogoInterpreter interpreter) {
 		this.interpreter = interpreter;
 		recording = false;
+		macros = new HashMap<>();
+		name = "";
 	}
 	/** 
 	 * Gibt an, ob gerade ein Makro aufgezeichnet wird.
@@ -27,8 +36,8 @@ public class StdMacroManager implements MacroManager {
 	 */
 	@Override
 	public void handleCommand(Command command) {
-		// TODO Auto-generated method stub
-		
+		macros.get(name).add(command);
+		command.execute();
 	}
 	/**
 	 * Beginnt mit der Aufzeichnung eines neuen Makros. Nach Beendigung des Makros 
@@ -36,8 +45,10 @@ public class StdMacroManager implements MacroManager {
 	 */
 	@Override
 	public void startMacro(String name) {
-		// TODO Auto-generated method stub
-
+		recording = true;
+		this.name = name;
+		macros.put(name, new MacroCommand(name));
+		interpreter.setColor(Color.RED);
 	}
 	/**
 	 * Gibt das Makro mit dem Namen name zurück. Falls das Makro nicht 
@@ -45,8 +56,11 @@ public class StdMacroManager implements MacroManager {
 	 */
 	@Override
 	public Command getCommand(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		if(macros.containsKey(name)) {
+			return macros.get(name);
+		} else {
+			return new NotFoundCommand(name);
+		}
 	}
 
 	/**
@@ -54,8 +68,10 @@ public class StdMacroManager implements MacroManager {
 	 */
 	@Override
 	public void endMacro() {
-		// TODO Auto-generated method stub
-
+		recording = false;
+		this.name = "";
+		interpreter.setColor(Color.BLACK);
+		interpreter.repaint();
 	}
 
 }

@@ -25,15 +25,13 @@ public class StdHistoryManager implements HistoryManager {
 	public void add(Command command) {
 		if(focus == history.size()){
 			history.add(command);
-			focus++;
 		} else {
 			for(int i = focus; i < history.size(); i++){
-				history.remove(i);
+				history.remove(focus);
 			}
 			history.add(command);
-			focus++;
-			
 		}
+		focus++;
 	}
 
 	/**
