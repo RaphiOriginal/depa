@@ -3,10 +3,11 @@ package patterns.factory.gui;
 import patterns.factory.gui.Components.Frame;
 
 public class CalculatorFactoryImpl implements CalculatorFactory {
+	
+	GUIStrategy g;
 
-	public void setComponentFactory(Object fact) {
-		// TODO this method is invoked by Spring in order to set the property "componentFactory".
-		//      Probably you will change the type of the argument of this method from Object to something more concrete.
+	public void setComponentFactory(GUIStrategy fact) {
+		g = fact;
 	}
 
 	public Frame newCalculatorFrame() {
