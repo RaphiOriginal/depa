@@ -59,8 +59,13 @@ public abstract class AbstractGeometry implements Figure{
 
 	@Override
 	public Figure clone() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			AbstractGeometry copy = (AbstractGeometry) super.clone();
+			copy.listeners = new LinkedList<FigureListener>();
+			return copy;
+		} catch (CloneNotSupportedException e) {
+			throw new InternalError();
+		}
 	}
 	
 	private List<FigureListener> listeners = new LinkedList<FigureListener>();

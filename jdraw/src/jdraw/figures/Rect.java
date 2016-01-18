@@ -69,5 +69,12 @@ public class Rect extends AbstractGeometry{
 	public Rectangle getBounds() {
 		return rectangle.getBounds();
 	}
+	
+	@Override 
+	public Rect clone(){
+		Rect copy = (Rect) super.clone();
+		copy.rectangle = (java.awt.Rectangle) copy.rectangle.clone();
+		return copy;
+	}
 
 }

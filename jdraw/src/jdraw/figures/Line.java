@@ -53,5 +53,12 @@ public class Line extends AbstractGeometry{
 	public Rectangle getBounds() {
 		return line.getBounds();
 	}
+	
+	@Override
+	public Line clone(){
+		Line copy = (Line) super.clone();
+		copy.line = (java.awt.geom.Line2D.Double) copy.line.clone();
+		return copy;
+	}
 
 }

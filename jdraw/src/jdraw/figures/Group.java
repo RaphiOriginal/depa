@@ -85,8 +85,16 @@ public class Group implements Figure{
 
 	@Override
 	public Figure clone() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Group copy = (Group) super.clone();
+			copy.parts = new LinkedList<Figure>();
+			for(Figure p: parts) {
+				copy.parts.add(p.clone());
+			}
+			return copy;
+		} catch (CloneNotSupportedException e) {
+			throw new InternalError();
+		}
 	}
 
 }

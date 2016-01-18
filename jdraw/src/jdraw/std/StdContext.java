@@ -38,6 +38,8 @@ import jdraw.grid.StepGrid;
  * @version 2.6, 24.09.09
  */
 public class StdContext extends AbstractContext {
+	
+	private SimpleClipboard clipboard = new SimpleClipboard();
 
 	/**
 	 * Constructs a standard context with a default set of drawing tools.
@@ -102,9 +104,36 @@ public class StdContext extends AbstractContext {
 		});
 
 		editMenu.addSeparator();
-		editMenu.add("Cut").setEnabled(false);
-		editMenu.add("Copy").setEnabled(false);
-		editMenu.add("Paste").setEnabled(false);
+		JMenuItem cut = new JMenuItem("Cut");
+		editMenu.add(cut);
+		cut.addActionListener(e -> {
+			clipboard.clear();
+			for(Figure f: getView().getSelection()) {
+				clipboard.add(f.clone());
+				
+				getModel().removeFigure(f);
+			}
+		});
+		
+		JMenuItem copy = new JMenuItem("Copy");
+		editMenu.add(copy);
+		copy.addActionListener(e -> {
+			clipboard.clear();
+			for(Figure f: getView().getSelection()) {
+				clipboard.add(f.clone());
+			}
+		});
+		
+		JMenuItem paste = new JMenuItem("Paste");
+		editMenu.add(paste);
+		paste.addActionListener(e -> {
+			getView().clearSelection();
+			for(Figure f:clipboard.getFigures()) {
+				Figure c = f.clone();
+				getModel().addFigure(c);
+				getView().addToSelection(c);
+			}
+		});
 
 		editMenu.addSeparator();
 		JMenuItem group = new JMenuItem("Group");
