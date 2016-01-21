@@ -7,6 +7,11 @@ package jdraw.std;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -336,6 +341,16 @@ public class StdContext extends AbstractContext {
 			if (chooser.getFileFilter() == filter && !filter.accept(file)) {
 				file = new File(chooser.getCurrentDirectory(), file.getName() + ".draw");
 			}
+			try {
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+				for(Figure f: getModel().getFigures()) {
+					oos.writeObject(f.clone());
+				}
+				oos.writeObject(null);
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println("save current graphic to file " + file.getName());
 		}
 	}
@@ -363,6 +378,24 @@ public class StdContext extends AbstractContext {
 
 		if (res == JFileChooser.APPROVE_OPTION) {
 			// read jdraw graphic
+			try {
+				DrawModel m = getModel();
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(chooser.getSelectedFile()));
+				while(true) {
+					try {
+						Object obj = ois.readObject();
+						if(obj == null) break;
+						Figure f = (Figure) obj;
+						m.addFigure(f);
+						obj = ois.readObject();
+					}  catch (ClassNotFoundException e) {
+						System.out.println("Figure not Found!");
+					}
+				}
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println("read file "
 					+ chooser.getSelectedFile().getName());
 		}
