@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import jdraw.figures.BorderDecorator;
 import jdraw.figures.Group;
 import jdraw.figures.LineTool;
 import jdraw.figures.OvalTool;
@@ -218,6 +219,22 @@ public class StdContext extends AbstractContext {
 		grid.add(ObjectGrid);
 		
 		editMenu.add(grid);
+		
+		editMenu.addSeparator();
+		
+		JMenuItem borderDecorator = new JMenuItem("Border");
+		borderDecorator.addActionListener(e -> {
+			List<Figure> s = getView().getSelection();
+			getView().clearSelection();
+			for(Figure f: s) {
+				BorderDecorator bd = new BorderDecorator(f);
+				getModel().removeFigure(f);
+				getModel().addFigure(bd);
+				getView().addToSelection(bd);
+			}
+		});
+		
+		editMenu.add(borderDecorator);
 		
 		return editMenu;
 	}
