@@ -22,6 +22,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import jdraw.figures.BorderDecorator;
+import jdraw.figures.BundleDecorator;
 import jdraw.figures.Group;
 import jdraw.figures.LineTool;
 import jdraw.figures.OvalTool;
@@ -235,6 +236,20 @@ public class StdContext extends AbstractContext {
 		});
 		
 		editMenu.add(borderDecorator);
+		
+		JMenuItem bundleDecorator = new JMenuItem("Bundle");
+		bundleDecorator.addActionListener(e -> {
+			List<Figure> s = getView().getSelection();
+			getView().clearSelection();
+			for(Figure f: s) {
+				BundleDecorator bd = new BundleDecorator(f);
+				getModel().removeFigure(f);
+				getModel().addFigure(bd);
+				getView().addToSelection(bd);
+			}
+		});
+		
+		editMenu.add(bundleDecorator);
 		
 		return editMenu;
 	}
