@@ -154,6 +154,8 @@ public class StdContext extends AbstractContext {
 				}
 				m.addFigure(g);
 				getView().addToSelection(g);
+				DrawCommandHandler cmd = getModel().getDrawCommandHandler();
+				cmd.addCommand(new GroupFigureCommand(m, g, true));
 			}
 		});
 		editMenu.add(group);
@@ -167,6 +169,8 @@ public class StdContext extends AbstractContext {
 						getModel().addFigure(f);
 						getView().addToSelection(f);
 					}
+					DrawCommandHandler cmd = getModel().getDrawCommandHandler();
+					cmd.addCommand(new GroupFigureCommand(getView().getModel(), (Group) g, false));
 				}
 			}
 		});

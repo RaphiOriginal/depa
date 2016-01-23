@@ -25,12 +25,14 @@ public class NorthWestHandle extends AbstractHandle{
 
 	@Override
 	public void startInteraction(int x, int y, MouseEvent e, DrawView v) {
+		v.getModel().getDrawCommandHandler().endScript();
 		java.awt.Rectangle r = owner.getBounds();
 		corner = new Point(r.x + r.width, r.y +  r.height);
 	}
 	
 	@Override
 	public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
+		createCommand(v, owner, new Point(x, y), corner);
 		owner.setBounds(new Point(x, y), corner);
 	}
 

@@ -6,9 +6,11 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
+import jdraw.std.SetBoundsCommand;
 
 public abstract class AbstractHandle implements FigureHandle{
 	private final int HANDLER_SIZE = 6;
@@ -55,6 +57,12 @@ public abstract class AbstractHandle implements FigureHandle{
 
 	@Override
 	public void stopInteraction(int x, int y, MouseEvent e, DrawView v) {
+		v.getModel().getDrawCommandHandler().endScript();
 		corner = null;
+	}
+	
+	protected void createCommand(DrawView v, Figure f, Point toOrig, Point toCorn){
+		DrawCommandHandler cmd = v.getModel().getDrawCommandHandler();
+		cmd.addCommand(new SetBoundsCommand(f, f.getBounds().getLocation(), corner, toCorn, toCorn));
 	}
 }

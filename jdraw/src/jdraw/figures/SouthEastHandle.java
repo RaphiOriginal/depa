@@ -25,12 +25,14 @@ public class SouthEastHandle extends AbstractHandle{
 
 	@Override
 	public void startInteraction(int x, int y, MouseEvent e, DrawView v) {
+		v.getModel().getDrawCommandHandler().endScript();
 		java.awt.Rectangle r = owner.getBounds();
 		corner = r.getLocation();
 	}
 
 	@Override
 	public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
+		createCommand(v, owner, corner, new Point(x, y));
 		owner.setBounds(corner, new Point(x, y));
 	}
 

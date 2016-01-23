@@ -33,6 +33,7 @@ public class StdDrawModel implements DrawModel, FigureListener{
 			figures.add(f);
 			f.addFigureListener(this);
 			modelChanged(f, DrawModelEvent.Type.FIGURE_ADDED);
+			handler.addCommand(new AddFigureCommand(this, f));
 		}
 	}
 
@@ -59,7 +60,7 @@ public class StdDrawModel implements DrawModel, FigureListener{
 
 	/** The draw command handler. Initialized here with a dummy implementation. */
 	// TODO initialize with your implementation of the undo/redo-assignment.
-	private DrawCommandHandler handler = new EmptyDrawCommandHandler();
+	private DrawCommandHandler handler = new MyDrawCommandHandler();
 
 	/**
 	 * Retrieve the draw command handler in use.

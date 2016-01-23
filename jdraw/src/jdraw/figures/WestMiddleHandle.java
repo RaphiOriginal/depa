@@ -25,6 +25,7 @@ public class WestMiddleHandle extends AbstractMiddleHandle{
 
 	@Override
 	public void startInteraction(int x, int y, MouseEvent e, DrawView v) {
+		v.getModel().getDrawCommandHandler().endScript();
 		java.awt.Rectangle r = owner.getBounds();
 		corner = new Point(r.x + r.width, r.y);
 		corner2 = new Point(r.x + r.width, r.y + r.height);
@@ -32,6 +33,7 @@ public class WestMiddleHandle extends AbstractMiddleHandle{
 
 	@Override
 	public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
+		createCommand(v, owner, new Point(x, corner.y), corner2);
 		owner.setBounds(new Point(x, corner.y), corner2);
 	}
 
