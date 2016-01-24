@@ -294,16 +294,21 @@ public class StdContext extends AbstractContext {
 		
 		return fileMenu;
 	}
+	
 
 	@Override
 	protected void doRegisterDrawTools() {
 		// TODO Add new figure tools here
-		DrawTool rectangleTool = new RectTool(this);
+		
+		for(DrawToolFactory dt: getToolFactories()){
+			addTool(dt == null ? null : dt.createTool(this));
+		}
+		/*DrawTool rectangleTool = new RectTool(this);
 		addTool(rectangleTool);
 		DrawTool ovalTool = new OvalTool(this);
 		addTool(ovalTool);
 		DrawTool lineTool = new LineTool(this);
-		addTool(lineTool);
+		addTool(lineTool);*/
 	}
 
 	/**
